@@ -2,27 +2,28 @@ import java.util.Random;
 import java.util.ArrayList;
 public class student {
 
+	private ArrayList<Integer> list;
 	public student(int num)
 	{
 		Random id = new Random();
-		ArrayList<Integer> list = new ArrayList<Integer>();
+        list = new ArrayList<Integer>();
 
-		for (int i=0; i<=num;i++)
+		/*for (int i=0; i<=num;i++)
 		{
 			list.add(id.nextInt(num)+1);  
-		}
+		}*/
 		for(int j: list)
 		{
 			System.out.print((j)+ " , ");
 		}
 		student.removeDuplicates(list);
 		System.out.println();
-		for(int j: list)
+		/*for(int j: list)
 		{
 			System.out.print((j)+ " , ");
-		}
+		}*/
 	}
-	public static void removeDuplicates(ArrayList<Integer> list) {
+	private static void removeDuplicates(ArrayList<Integer> list) {
 
 		int size = list.size();
 		for (int i = 0; i < size - 1; i++) 
@@ -40,5 +41,8 @@ public class student {
 				size--;
 			} // for j
 		} // for i
+	}
+	public ArrayList<Integer> getList(){
+		return list;
 	}
 }
