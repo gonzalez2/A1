@@ -1,44 +1,44 @@
-
+//This class gets students answers and print out the result.
+import java.util.*;
 public class iClickerService {
 
-	private int[] statistic;
-	
-	protected iClickerService(){
-		statistic = new int[4];
-		statistic[0]=0;
-		statistic[1]=0;
-		statistic[2]=0;
-		statistic[3]=0;		
+	private Hashtable< Integer, Character> stats;
+	private ArrayList<Character> list;
+	public iClickerService(Hashtable< Integer, Character> stats){
+		this.stats = new Hashtable< Integer, Character>();
+		this.stats.putAll(stats);
+		list = new ArrayList<Character>();
+		//Gets the values of the keys and stores them in an arraylist
+		for(Integer itm : stats.keySet()){
+			list.add(stats.get(itm)); 
+		}
+
 	}
-	protected iClickerService(int size){
-		statistic = new int[size];
-		statistic[0]=0;
-		statistic[1]=0;
-				
-	}
-	
-	public void setAnswers(int one, int two, int three, int four){
-		statistic[0]+=one;
-		statistic[1]+=two;
-		statistic[2]+=three;
-		statistic[3]+=four;	
-	}
-	public void setAnswers(int one, int two){
-		statistic[0]+=one;
-		statistic[1]+=two;	
-	}
-	
-	public String toString(){
-		
-		return "A: " + statistic[0] +"\n" +
-			   "B: " + statistic[1] +"\n" +
-			   "C: " + statistic[2] +"\n" +
-			   "D: " + statistic[3] +"\n";	       
-	}
-public String toStringS(){
-		
-		return "A: " + statistic[0] +"\n" +
-			   "B: " + statistic[1] +"\n";
-			   	       
+	public void getStats(int graph)
+	{
+		Set<Character> result = new HashSet<Character>(list);
+		if(graph !=1)
+		{
+			//Print out students answer 
+			for (Character temp : result) 
+			{
+				System.out.println(temp + ": " + Collections.frequency(list, temp));
+			}
+		}
+		else
+		{
+			System.out.println("Each '*' equals 1 student \n______________________");
+			//Print out the students answers in graph form
+			for (Character temp : result) 
+			{
+				System.out.print(temp + ": " );
+				for(int i = 0; i < Collections.frequency(list, temp);i++)
+				{
+					System.out.print("*");
+				}
+				System.out.println();
+			}
+		}
 	}
 }
+

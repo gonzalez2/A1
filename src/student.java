@@ -1,46 +1,53 @@
+/*This class generates students and their answers and sends 
+ the statistics to iClickerService class.
+ */
+import java.util.Hashtable;
 import java.util.Random;
-import java.util.ArrayList;
 public class student {
 
-	private ArrayList<Integer> list;
-	protected student(int num,int mChoice)
-	{
+	private int numStudent;
+	private int answers;
+	private int type;
+	private iClickerService info;
+	Hashtable< Integer, Character> students;
+	public student(int numStudent,int type,int answers){
+		students = new Hashtable<Integer, Character>(); 
+		this.numStudent=numStudent;
+		this.answers= answers;
+		this.type=type;
+		if(1==type)
+			creatClassMC();
+		else
+			creatClassSA();
+	}
+	//Creates a class of multiple choice questions
+	private void creatClassMC(){
 		Random id = new Random();
-		list = new ArrayList<Integer>();
-		
-		 for (int i=0; i<num;i++)
-		 {
-		      list.add(id.nextInt(num));  
-		 }
-		 
-		 if(mChoice == 2)
-		     student.removeDuplicates(list); 
-		
+		//Creates students and makes them pick random answer
+		for(int i = 1; i <=numStudent; i++){
+			students.put(id.nextInt(numStudent+1),randomCharacter(answers));
+		}
+		//Sends data to the IClickerService and prints it out.
+		info = new iClickerService(students);
 	}
-	private static void removeDuplicates(ArrayList<Integer> list) {
+	//Creates a question of type True or False
+	private void creatClassSA(){
+		Random id = new Random();		
+		//Makes students id(duplicates as well) and get random answers
+		for(int i = 1; i <=numStudent; i++){
+			students.put(id.nextInt(numStudent+1),randomCharacter(2));
+		}
+		info = new iClickerService(students);
 
-	    int size = list.size();
-	    for (int i = 0; i < size - 1; i++) 
-	    {
-	        // start from the next item after strings[i]
-	        // since the ones before are checked
-	        for (int j = i + 1; j < size; j++) 
-	        {
-	            if (!list.get(j).equals(list.get(i)))
-	                continue;
-	            list.remove(j);
-	            // decrease j because the array got re-indexed
-	            j--;
-	            // decrease the size of the array
-	            size--;
-	        } // for j
-	    } // for i
 	}
-	public ArrayList<Integer> getList(){
-		return list;
+	//Creates random and answers (characters)
+	private static char randomCharacter(int answers) {
+		Random r = new Random();
+		char random_Char = (char) (65 + r.nextInt(answers));
+		return random_Char;
 	}
-	public int size(){
-		return list.size();
+	//calls for the statistic
+	public void getData(int graph){
+		info.getStats(graph);
 	}
-		
 }
